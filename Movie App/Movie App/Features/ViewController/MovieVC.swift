@@ -16,6 +16,8 @@ protocol MovieVCOutput: AnyObject {
     func prepareSearchController()
 }
 
+protocol MovieVCDelegate: AnyObject {}
+
 final class MovieVC: UIViewController {
     
     private lazy var viewModel = MovieViewModel()
@@ -38,7 +40,7 @@ extension MovieVC {
     }
 }
 
-extension MovieVC: MovieVCOutput {
+extension MovieVC: MovieVCOutput {    
     func prepareSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
@@ -83,8 +85,21 @@ extension MovieVC: UITableViewDelegate, UITableViewDataSource {
         cell.set(title: movie?.title ?? "", release: movie?.releaseDate ?? "", image: image )
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = viewModel.movies?.movieResults?[indexPath.row]
+        let destVC = MovieInfoVC()
+        destVC.delegate = self
+        let image = APIEndpoints.imagePath(image: movie?.posterPath ?? "")
+        destVC.getMovieDatas(title: movie?.title ?? "", overview: movie?.overview ?? "", poster: image)
+        let navController = UINavigationController(rootViewController: destVC)
+        present(navController, animated: true)
+    }
 }
 
+extension MovieVC: MovieVCDelegate {}
+
+// will be updated
 extension MovieVC:  UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
 

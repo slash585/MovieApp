@@ -12,9 +12,15 @@ protocol MovieInfoVCDelegate: AnyObject {
     func getMovieDatas(title: String, overview: String, poster: String)
 }
 
+protocol MovieInfoOutput: AnyObject {
+    
+}
+
 final class MovieInfoVC: UIViewController {
     
     weak var delegate: MovieVCDelegate!
+    
+    private lazy var viewModel = MovieInfoViewModel()
     
     private lazy var posterImageView: UIImageView = UIImageView()
     private lazy var titleLabel: UILabel = UILabel()
@@ -22,6 +28,7 @@ final class MovieInfoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.view = self
         configure()
     }
 }
@@ -89,4 +96,8 @@ extension MovieInfoVC: MovieInfoVCDelegate {
         titleLabel.text = title
         overviewLabel.text = overview
     }
+}
+
+extension MovieInfoVC: MovieInfoOutput {
+    
 }

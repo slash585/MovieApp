@@ -45,12 +45,22 @@ extension MovieInfoVC {
         overviewLabel.translatesAutoresizingMaskIntoConstraints = false
         
         makePosterImageView()
+        configureViewController()
         makeTitleLabel()
         makeOverviewLabel()
     }
     
+    private func configureViewController(){
+        view.backgroundColor = .systemBackground
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
+        let bookmarkButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBookmark))
+        navigationItem.rightBarButtonItem = doneButton
+        navigationItem.leftBarButtonItem = bookmarkButton
+    }
+    
     private func makePosterImageView(){
         posterImageView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top).offset(48)
             make.centerX.equalTo(view.snp.centerX)
             make.width.equalTo(view.snp.width)
             make.height.equalToSuperview().multipliedBy(0.5)
@@ -86,6 +96,17 @@ extension MovieInfoVC {
             make.leading.equalTo(view.snp.leading).offset(16)
             make.trailing.equalTo(view.snp.trailing).offset(-16)
         }
+    }
+}
+
+//MARK: - Objc funcs
+extension MovieInfoVC {
+    @objc private func dismissVC(){
+        dismiss(animated: true)
+    }
+    
+    @objc private func addBookmark(){
+        
     }
 }
 

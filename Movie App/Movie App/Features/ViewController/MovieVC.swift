@@ -8,7 +8,8 @@
 import UIKit
 
 protocol MovieVCOutput: AnyObject {
-    
+    func showIndicator()
+    func dismissIndicator()
 }
 
 final class MovieVC: UIViewController {
@@ -31,5 +32,11 @@ extension MovieVC {
 }
 
 extension MovieVC: MovieVCOutput {
+    func showIndicator() {
+        showLoadingView()
+    }
     
+    func dismissIndicator() {
+        dismissLoadingView()
+    }
 }

@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol MovieInfoVCDelegate: AnyObject {
-    func getMovieDatas(title: String, overview: String, poster: String)
+    func getMovieDatas(movie: MovieResult)
 }
 
 protocol MovieInfoOutput: AnyObject {
@@ -90,11 +90,12 @@ extension MovieInfoVC {
 }
 
 extension MovieInfoVC: MovieInfoVCDelegate {
-    func getMovieDatas(title: String, overview: String, poster: String) {
-        guard let imageUrl = URL(string: poster) else { return }
+    func getMovieDatas(movie: MovieResult) {
+        let image = APIEndpoints.imagePath(image: movie.posterPath ?? "")
+        guard let imageUrl = URL(string: image) else { return }
         posterImageView.kf.setImage(with: imageUrl)
-        titleLabel.text = title
-        overviewLabel.text = overview
+        titleLabel.text = movie.title
+        overviewLabel.text = movie.overview
     }
 }
 

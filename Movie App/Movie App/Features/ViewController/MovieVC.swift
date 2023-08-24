@@ -87,11 +87,10 @@ extension MovieVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie = viewModel.movies?.movieResults?[indexPath.row]
+        guard let movie = viewModel.movies?.movieResults?[indexPath.row] else { return }
         let destVC = MovieInfoVC()
         destVC.delegate = self
-        let image = APIEndpoints.imagePath(image: movie?.posterPath ?? "")
-        destVC.getMovieDatas(title: movie?.title ?? "", overview: movie?.overview ?? "", poster: image)
+        destVC.getMovieDatas(movie: movie)
         let navController = UINavigationController(rootViewController: destVC)
         present(navController, animated: true)
     }

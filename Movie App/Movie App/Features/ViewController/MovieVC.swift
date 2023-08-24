@@ -7,9 +7,29 @@
 
 import UIKit
 
+protocol MovieVCOutput: AnyObject {
+    
+}
+
 final class MovieVC: UIViewController {
+    
+    private lazy var viewModel = MovieViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.view = self
+        viewModel.viewDidLoad()
+        configureUI()
+    }
+}
+
+//MARK: - UI Related
+extension MovieVC {
+    private func configureUI(){
         view.backgroundColor = .systemBackground
     }
+}
+
+extension MovieVC: MovieVCOutput {
+    
 }

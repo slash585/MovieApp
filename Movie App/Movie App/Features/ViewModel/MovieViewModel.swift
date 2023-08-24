@@ -21,6 +21,7 @@ final class MovieViewModel: MovieViewModelProtocol {
     func viewDidLoad() {
         getMovies()
         view?.prepareTableView()
+        view?.prepareSearchController()
     }
     
     func getMovies() {

@@ -13,6 +13,7 @@ protocol MovieVCOutput: AnyObject {
     func dismissIndicator()
     func prepareTableView()
     func reloadTableView()
+    func prepareSearchController()
 }
 
 final class MovieVC: UIViewController {
@@ -38,6 +39,15 @@ extension MovieVC {
 }
 
 extension MovieVC: MovieVCOutput {
+    func prepareSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a movie name"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
+    
     func reloadTableView() {
         tableView.reloadData()
     }
@@ -73,6 +83,14 @@ extension MovieVC: UITableViewDelegate, UITableViewDataSource {
         cell.set(title: movie?.title ?? "", release: movie?.releaseDate ?? "", image: image )
         return cell
     }
+}
+
+extension MovieVC:  UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+
+    }
     
-    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+
+    }
 }

@@ -13,11 +13,16 @@ enum NetworkMessages: String, Error {
 }
 
 enum APIEndpoints: String {
+    case IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
     case BASE_URL = "https://api.themoviedb.org/3/movie"
     case POPULAR = "/popular"
-    
+        
     static func popularMoviesEndpoint() -> String {
         return "\(BASE_URL.rawValue)\(POPULAR.rawValue)"
+    }
+    
+    static func imagePath(image: String) -> String {
+        return "\(IMAGE_PATH.rawValue)\(image)"
     }
 }
 

@@ -20,6 +20,7 @@ final class MovieViewModel: MovieViewModelProtocol {
     
     func viewDidLoad() {
         getMovies()
+        view?.prepareTableView()
     }
     
     func getMovies() {
@@ -31,6 +32,7 @@ final class MovieViewModel: MovieViewModelProtocol {
                 case .success(let movies):
                     strongSelf.view?.dismissIndicator()
                     strongSelf.movies = movies
+                    strongSelf.view?.reloadTableView()
                 case .failure(let error):
                     strongSelf.view?.dismissIndicator()
                     print(error)

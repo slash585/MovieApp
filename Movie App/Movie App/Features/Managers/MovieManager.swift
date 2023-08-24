@@ -16,6 +16,7 @@ final class MovieManager: IMovieManager {
     
     static let shared = MovieManager()
     
+    
     func fetchMovies(response: @escaping (Result<Movies?, NetworkMessages>) -> Void){
         AF.request(APIEndpoints.popularMoviesEndpoint(), headers: headers).responseDecodable(of: Movies.self) { (model) in
             guard let data = model.value else {
